@@ -89,19 +89,47 @@ export const seedDatabase = async () => {
     { cat: 'PLUMB', name: 'Emergency Leakage Repair', code: 'PLUMB-LEAK', price: 450, dur: 45, icon: 'Droplet', emergency: 1, desc: 'Fix sudden pipe bursts, tap leakages, and water overflow.' },
     { cat: 'PLUMB', name: 'Tap & Mixer Installation', code: 'PLUMB-TAP', price: 350, dur: 45, icon: 'Droplet', emergency: 0, desc: 'Mount new bathroom taps, sink mixers, and health faucets.' },
     { cat: 'PLUMB', name: 'Drainage Unclogging', code: 'PLUMB-DRAIN', price: 600, dur: 60, icon: 'Droplet', emergency: 1, desc: 'Clear blocked kitchen sinks, bathroom drains, and main pipes.' },
+    { cat: 'PLUMB', name: 'Overhead Tank Cleaning & Sanitization', code: 'PLUMB-TANK', price: 999, dur: 120, icon: 'Droplet', emergency: 0, desc: 'Complete mechanical scrubbing and UV sanitization of overhead water tanks.' },
+    { cat: 'PLUMB', name: 'Wash Basin & Counter Fitting', code: 'PLUMB-BASIN', price: 400, dur: 60, icon: 'Droplet', emergency: 0, desc: 'Mount new ceramic wash basin, bottle trap, and waste pipe assembly.' },
     
     { cat: 'ELEC', name: 'Electrical Short Circuit Troubleshooting', code: 'ELEC-SHORT', price: 500, dur: 60, icon: 'Zap', emergency: 1, desc: 'Diagnose tripped MCBs, burnt sockets, and sudden blackout.' },
     { cat: 'ELEC', name: 'Ceiling Fan Installation & Repair', code: 'ELEC-FAN', price: 300, dur: 40, icon: 'Zap', emergency: 0, desc: 'Assemble, mount ceiling fan or replace regular fan motor.' },
     { cat: 'ELEC', name: 'Switchboard & Socket Fitting', code: 'ELEC-SWITCH', price: 350, dur: 45, icon: 'Zap', emergency: 0, desc: 'Replace faulty switches, install modular sockets, and earthing.' },
+    { cat: 'ELEC', name: 'Whole House Electrical Safety Inspection', code: 'ELEC-INSPECT', price: 750, dur: 90, icon: 'Zap', emergency: 0, desc: 'Comprehensive thermal scanning of wiring, earth resistance check, and MCB testing.' },
+    { cat: 'ELEC', name: 'Inverter & Heavy Duty Battery Wiring', code: 'ELEC-INVERTER', price: 850, dur: 90, icon: 'Zap', emergency: 1, desc: 'Install power backup inverter, high capacity tubular battery, and selector switch.' },
 
     { cat: 'AC', name: 'AC Deep Foam Cleaning & Service', code: 'AC-SERVICE', price: 699, dur: 75, icon: 'Wind', emergency: 0, desc: 'High-pressure jet wash, filter cleaning, and cooling check.' },
     { cat: 'AC', name: 'AC Gas Charging & Leak Detection', code: 'AC-GAS', price: 1800, dur: 90, icon: 'Wind', emergency: 1, desc: 'Recharge eco-friendly refrigerant gas and seal pipe pinholes.' },
+    { cat: 'AC', name: 'Split AC Uninstallation & Reinstallation', code: 'AC-INSTALL', price: 1499, dur: 120, icon: 'Wind', emergency: 0, desc: 'Dismantle outdoor/indoor unit, copper pipe braze, and remount.' },
 
     { cat: 'CARP', name: 'Door Lock Repair & Installation', code: 'CARP-LOCK', price: 400, dur: 50, icon: 'Hammer', emergency: 1, desc: 'Fix jammed door handles, mortise locks, or add safety latches.' },
     { cat: 'CARP', name: 'Furniture Assembly & Repair', code: 'CARP-FURN', price: 550, dur: 90, icon: 'Hammer', emergency: 0, desc: 'Assemble modular beds, wardrobes, and align cabinet hinges.' },
+    { cat: 'CARP', name: 'Modular Kitchen Drawer & Cabinet Repair', code: 'CARP-KITCHEN', price: 600, dur: 75, icon: 'Hammer', emergency: 0, desc: 'Fix hydraulic hinges, soft-close drawer channels, and cabinet handles.' },
+    { cat: 'CARP', name: 'Wooden Floor & Laminate Polishing', code: 'CARP-FLOOR', price: 1200, dur: 180, icon: 'Hammer', emergency: 0, desc: 'Scuff removal, scratch filling, and polyurethane shine coat for wooden flooring.' },
+
+    { cat: 'APPL', name: 'Washing Machine Repair & Drum Service', code: 'APPL-WASH', price: 550, dur: 60, icon: 'Tv', emergency: 0, desc: 'Fix water drain errors, spin motor noise, and PCB board issues.' },
+    { cat: 'APPL', name: 'Microwave Oven & Kitchen Hob Service', code: 'APPL-MICRO', price: 450, dur: 45, icon: 'Tv', emergency: 0, desc: 'Replace heating magnetron, touch panel repair, and hob burner cleaning.' },
+    { cat: 'APPL', name: 'Smart TV Wall Mounting & Concealed Cabling', code: 'APPL-TV', price: 399, dur: 45, icon: 'Tv', emergency: 0, desc: 'Heavy duty TV wall bracket fitting, alignment, and HDMI cable concealment.' },
+
+    { cat: 'CLEAN', name: 'Full Home Deep Sanitation', code: 'CLEAN-FULL', price: 2499, dur: 240, icon: 'Sparkles', emergency: 0, desc: 'Complete scrubbing of kitchen, washrooms, balcony & windows.' },
+    { cat: 'CLEAN', name: 'Sofa & Upholstery Shampoo Deep Wash', code: 'CLEAN-SOFA', price: 899, dur: 90, icon: 'Sparkles', emergency: 0, desc: 'Extraction vacuuming, fabric stain removal, and anti-allergen treatment.' },
+    { cat: 'CLEAN', name: 'Kitchen Chimney & Hood Scrubbing', code: 'CLEAN-CHIMNEY', price: 699, dur: 60, icon: 'Sparkles', emergency: 0, desc: 'Degreasing mesh filters, rotor fan cleaning, and stainless steel polish.' },
 
     { cat: 'CARE', name: 'Elderly Nursing Care (Daily Shift)', code: 'CARE-ELDER', price: 800, dur: 480, icon: 'HeartPulse', emergency: 0, desc: 'Assistance with mobility, medicine reminder, hygiene care.' },
-    { cat: 'CLEAN', name: 'Full Home Deep Sanitation', code: 'CLEAN-FULL', price: 2499, dur: 240, icon: 'Sparkles', emergency: 0, desc: 'Complete scrubbing of kitchen, washrooms, balcony & windows.' }
+    { cat: 'CARE', name: 'Post-Surgery Patient Assistance & Aid', code: 'CARE-SURGERY', price: 950, dur: 480, icon: 'HeartPulse', emergency: 0, desc: 'Physiotherapy assistance, wound hygiene monitoring, and vital checks.' },
+    { cat: 'CARE', name: 'Childcare & Special Needs Day Support', code: 'CARE-CHILD', price: 700, dur: 480, icon: 'HeartPulse', emergency: 0, desc: 'Attentive child monitoring, feeding aid, and educational activity assistance.' },
+
+    { cat: 'PAINT', name: 'Interior Wall Painting & Texture Art', code: 'PAINT-INT', price: 1999, dur: 360, icon: 'Paintbrush', emergency: 0, desc: 'Premium acrylic emulsion coating, wall putty sanding, and accent wall design.' },
+    { cat: 'PAINT', name: 'Waterproofing & Damp Shield Treatment', code: 'PAINT-WATERPROOF', price: 2800, dur: 360, icon: 'Paintbrush', emergency: 1, desc: 'Terrace crack filling, silicone sealant coating, and dampness barrier application.' },
+
+    { cat: 'GARDEN', name: 'Lawn Trimming & Garden Maintenance', code: 'GARDEN-MAINT', price: 500, dur: 90, icon: 'Trees', emergency: 0, desc: 'Grass cutting, shrub pruning, organic fertilizer application, and weeding.' },
+    { cat: 'GARDEN', name: 'Balcony Plant Potting & Soil Setup', code: 'GARDEN-POTTING', price: 450, dur: 60, icon: 'Trees', emergency: 0, desc: 'Potting mix preparation, coco peat blending, and plant health treatment.' },
+
+    { cat: 'DOMESTIC', name: 'Daily Home Maid & Floor Housekeeping', code: 'DOMESTIC-MAID', price: 400, dur: 120, icon: 'Home', emergency: 0, desc: 'Sweeping, floor mopping, utensil washing, and dust removal.' },
+    { cat: 'DOMESTIC', name: 'Home Cook - Meal Preparation (2 Meals)', code: 'DOMESTIC-COOK', price: 650, dur: 120, icon: 'Home', emergency: 0, desc: 'Fresh South/North Indian lunch and dinner preparation for household.' },
+
+    { cat: 'DRIVER', name: 'On-Demand City Personal Driver', code: 'DRIVER-CITY', price: 500, dur: 240, icon: 'Car', emergency: 0, desc: 'Experienced local driver for manual/automatic cars across Hyderabad city.' },
+    { cat: 'DRIVER', name: 'Outstation Highway Professional Driver', code: 'DRIVER-OUTSTATION', price: 1200, dur: 720, icon: 'Car', emergency: 0, desc: 'Safe highway driving for long distance trips across Telangana & AP.' }
   ];
 
   const serviceMap = {};
@@ -203,15 +231,28 @@ export const seedDatabase = async () => {
     { name: 'Suresh Varma', email: 'suresh.ac@sahakar.in', role: 'worker', society: coop2.id, exp: 5, status: 'VERIFIED', lat: 17.4450, lng: 78.3850, rating: 4.7, jobs: 28, fair: 0.95, skillCode: 'SKILL-COMPRESSOR' },
     { name: 'Mahesh Babu', email: 'mahesh.carp@sahakar.in', role: 'worker', society: coop1.id, exp: 6, status: 'VERIFIED', lat: 17.4250, lng: 78.4150, rating: 4.6, jobs: 19, fair: 0.98, skillCode: 'SKILL-LOCK' },
     { name: 'Sunitha Caregiver', email: 'sunitha.care@sahakar.in', role: 'worker', society: coop3.id, exp: 8, status: 'VERIFIED', lat: 17.4350, lng: 78.4900, rating: 4.95, jobs: 51, fair: 0.85, skillCode: 'SKILL-NURSING' },
+    { name: 'Ramesh Kumar', email: 'ramesh.elec@sahakar.in', role: 'worker', society: coop1.id, exp: 10, status: 'VERIFIED', lat: 17.4180, lng: 78.4420, rating: 4.88, jobs: 64, fair: 0.78, skillCode: 'SKILL-WIRING' },
+    { name: 'Satish Babu', email: 'satish.ac@sahakar.in', role: 'worker', society: coop2.id, exp: 7, status: 'VERIFIED', lat: 17.4410, lng: 78.3820, rating: 4.82, jobs: 39, fair: 0.91, skillCode: 'SKILL-COMPRESSOR' },
+    { name: 'Govind Rao', email: 'govind.plumb@sahakar.in', role: 'worker', society: coop1.id, exp: 12, status: 'VERIFIED', lat: 17.4210, lng: 78.4490, rating: 4.92, jobs: 88, fair: 0.72, skillCode: 'SKILL-PIPE' },
+    { name: 'Mallesham K.', email: 'mallesham.carp@sahakar.in', role: 'worker', society: coop1.id, exp: 8, status: 'VERIFIED', lat: 17.4130, lng: 78.4390, rating: 4.79, jobs: 31, fair: 0.93, skillCode: 'SKILL-LOCK' },
+    { name: 'Priya Sharma', email: 'priya.care@sahakar.in', role: 'worker', society: coop3.id, exp: 6, status: 'VERIFIED', lat: 17.4380, lng: 78.4950, rating: 4.91, jobs: 27, fair: 0.96, skillCode: 'SKILL-NURSING' },
+    { name: 'Ganesh Reddy', email: 'ganesh.cook@sahakar.in', role: 'worker', society: coop3.id, exp: 11, status: 'VERIFIED', lat: 17.4310, lng: 78.4850, rating: 4.86, jobs: 73, fair: 0.75, skillCode: 'SKILL-DRAIN' },
+    { name: 'Nageshwar Rao', email: 'nagesh.driver@sahakar.in', role: 'worker', society: coop2.id, exp: 14, status: 'VERIFIED', lat: 17.4520, lng: 78.3750, rating: 4.96, jobs: 105, fair: 0.68, skillCode: 'SKILL-COMPRESSOR' },
+    { name: 'Suhasini Devi', email: 'suhasini.clean@sahakar.in', role: 'worker', society: coop3.id, exp: 5, status: 'VERIFIED', lat: 17.4420, lng: 78.4930, rating: 4.84, jobs: 36, fair: 0.92, skillCode: 'SKILL-NURSING' },
+    { name: 'Bala Krishna', email: 'balakrishna.paint@sahakar.in', role: 'worker', society: coop1.id, exp: 9, status: 'VERIFIED', lat: 17.4160, lng: 78.4460, rating: 4.77, jobs: 45, fair: 0.89, skillCode: 'SKILL-WIRING' },
+    { name: 'Venkata Ramana', email: 'venkat.garden@sahakar.in', role: 'worker', society: coop2.id, exp: 8, status: 'VERIFIED', lat: 17.4460, lng: 78.3880, rating: 4.85, jobs: 41, fair: 0.90, skillCode: 'SKILL-PIPE' },
+    { name: 'Srikanth M.', email: 'srikanth.appl@sahakar.in', role: 'worker', society: coop2.id, exp: 7, status: 'VERIFIED', lat: 17.4470, lng: 78.3790, rating: 4.78, jobs: 33, fair: 0.94, skillCode: 'SKILL-COMPRESSOR' },
     
     // Workers with PENDING verification status (for Coop Admin Verification Queue testing)
     { name: 'Praveen Goud', email: 'praveen.pending@sahakar.in', role: 'worker', society: coop1.id, exp: 3, status: 'PENDING', lat: 17.4050, lng: 78.4200, rating: 5.0, jobs: 0, fair: 1.0, skillCode: 'SKILL-WIRING' },
     { name: 'Anil Kumar', email: 'anil.pending@sahakar.in', role: 'worker', society: coop2.id, exp: 4, status: 'PENDING', lat: 17.4500, lng: 78.3700, rating: 5.0, jobs: 0, fair: 1.0, skillCode: 'SKILL-PIPE' },
     { name: 'Venkatesh Naik', email: 'venky.pending@sahakar.in', role: 'worker', society: coop3.id, exp: 2, status: 'PENDING', lat: 17.4400, lng: 78.5000, rating: 5.0, jobs: 0, fair: 1.0, skillCode: 'SKILL-DRAIN' },
-    
-    // Additional verified workers to simulate fair allocation
-    { name: 'Nagaraju M.', email: 'nagaraju@sahakar.in', role: 'worker', society: coop1.id, exp: 11, status: 'VERIFIED', lat: 17.4150, lng: 78.4500, rating: 4.8, jobs: 60, fair: 0.75, skillCode: 'SKILL-WIRING' },
-    { name: 'Chandra Shekar', email: 'chandra@sahakar.in', role: 'worker', society: coop2.id, exp: 4, status: 'VERIFIED', lat: 17.4400, lng: 78.3900, rating: 4.75, jobs: 12, fair: 0.99, skillCode: 'SKILL-COMPRESSOR' }
+    { name: 'Madhuri Latha', email: 'madhuri.pending@sahakar.in', role: 'worker', society: coop3.id, exp: 4, status: 'PENDING', lat: 17.4320, lng: 78.4910, rating: 5.0, jobs: 0, fair: 1.0, skillCode: 'SKILL-NURSING' },
+    { name: 'Vijay Chander', email: 'vijay.pending@sahakar.in', role: 'worker', society: coop4.id, exp: 5, status: 'PENDING', lat: 16.5080, lng: 80.6450, rating: 5.0, jobs: 0, fair: 1.0, skillCode: 'SKILL-PIPE' },
+
+    // Additional Vijayawada workers
+    { name: 'Lakshman Rao', email: 'lakshman.vja@sahakar.in', role: 'worker', society: coop4.id, exp: 11, status: 'VERIFIED', lat: 16.5070, lng: 80.6490, rating: 4.89, jobs: 58, fair: 0.81, skillCode: 'SKILL-PIPE' },
+    { name: 'Durga Prasad', email: 'durga.vja@sahakar.in', role: 'worker', society: coop4.id, exp: 8, status: 'VERIFIED', lat: 16.5050, lng: 80.6510, rating: 4.81, jobs: 37, fair: 0.92, skillCode: 'SKILL-COMPRESSOR' }
   ];
 
   for (const w of seedWorkers) {

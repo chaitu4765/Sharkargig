@@ -122,6 +122,13 @@ export const AuthProvider = ({ children }) => {
       federation_admin: { email: 'admin.state@sahakar.in', password: 'Password123!' }
     };
 
+    const fallbackUsers = {
+      customer: { id: 1, email: 'customer@sahakar.in', role: 'customer', full_name: 'Lakshmi Narayana', phone: '+91 98490 12345' },
+      worker: { id: 2, email: 'ravi.worker@sahakar.in', role: 'worker', full_name: 'Ravi Kumar', phone: '+91 97001 55443' },
+      coop_admin: { id: 3, email: 'admin.hyderabad@sahakar.in', role: 'coop_admin', full_name: 'Srinivas Rao (Coop Manager)', phone: '+91 94400 66778' },
+      federation_admin: { id: 4, email: 'admin.state@sahakar.in', role: 'federation_admin', full_name: 'Dr. Venkat Reddy (Federation Director)', phone: '+91 98850 33221' }
+    };
+
     const creds = demoCredentials[roleName];
     if (!creds) return;
 
@@ -135,9 +142,12 @@ export const AuthProvider = ({ children }) => {
       const data = await res.json();
       if (data.success) {
         login(data.user, data.token);
+      } else {
+        setUser(fallbackUsers[roleName]);
       }
     } catch (err) {
-      console.error('Demo login failed:', err);
+      console.warn('Demo API login offline/CORS fallback engaged:', err);
+      setUser(fallbackUsers[roleName]);
     } finally {
       setLoading(false);
     }

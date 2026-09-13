@@ -27,11 +27,29 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = process.env.PORT || 5000;
 
-app.use(cors({ origin: '*' }));
+// Universal CORS Middleware for standalone & Vercel deployment
+app.use((req, res, next) => {
+  const origin = req.headers.origin || '*';
+  res.setHeader('Access-Control-Allow-Origin', origin);
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization, X-CSRF-Token, Accept-Version, Content-Length, Content-MD5, Date, X-Api-Version');
+  if (req.headers.origin) {
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+  }
+  
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+  next();
+});
+
 app.use(express.json());
 
 // Middleware for initializing Vercel serverless database on request
 app.use(async (req, res, next) => {
+  if (req.method === 'OPTIONS') {
+    return next();
+  }
   try {
     const userCount = await get(`SELECT COUNT(*) as count FROM users`);
     if (!userCount || userCount.count === 0) {
@@ -78,6 +96,32 @@ app.use('/api/cooperatives', cooperativesRoutes);
 app.use('/api/welfare', welfareRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/notifications', notificationsRoutes);
+
+// Fallback 404 handler with CORS headers
+app.use((req, res) => {
+  const origin = req.headers.origin || '*';
+  res.setHeader('Access-Control-Allow-Origin', origin);
+  if (req.headers.origin) {
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+  }
+  res.status(404).json({ error: true, message: `Route ${req.method} ${req.url} not found` });
+});
+
+// Global error handler with CORS headers
+app.use((err, req, res, next) => {
+  console.error('Unhandled API Server Error:', err);
+  const origin = req.headers.origin || '*';
+  res.setHeader('Access-Control-Allow-Origin', origin);
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+  if (req.headers.origin) {
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+  }
+  res.status(err.status || 500).json({
+    error: true,
+    message: err.message || 'Internal Server Error'
+  });
+});
 
 // Initialize database schema and auto-seed if clean startup
 const startServer = async () => {
