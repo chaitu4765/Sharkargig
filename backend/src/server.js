@@ -30,6 +30,43 @@ const PORT = process.env.PORT || 5000;
 app.use(cors({ origin: '*' }));
 app.use(express.json());
 
+// Middleware for initializing Vercel serverless database on request
+app.use(async (req, res, next) => {
+  try {
+    const userCount = await get(`SELECT COUNT(*) as count FROM users`);
+    if (!userCount || userCount.count === 0) {
+      await seedDatabase();
+    }
+  } catch (err) {
+    try {
+      await initSchema();
+      await seedDatabase();
+    } catch (e) {
+      console.error('Auto-seed error:', e);
+    }
+  }
+  next();
+});
+
+// Root welcome endpoint
+app.get('/', (req, res) => {
+  res.json({
+    status: 'ONLINE',
+    service: 'SIH26089 SahakarGig Backend API',
+    health: '/api/health',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Health check endpoint
+app.get('/api/health', (req, res) => {
+  res.json({
+    status: 'HEALTHY',
+    service: 'SIH26089 Cooperative Gig Services Platform Backend API',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/services', servicesRoutes);
@@ -41,29 +78,6 @@ app.use('/api/cooperatives', cooperativesRoutes);
 app.use('/api/welfare', welfareRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/notifications', notificationsRoutes);
-
-// Health check endpoint
-app.get('/api/health', (req, res) => {
-  res.json({
-    status: 'HEALTHY',
-    service: 'SIH26089 Cooperative Gig Services Platform Backend API',
-    timestamp: new Date().toISOString()
-  });
-});
-
-// Middleware for initializing Vercel serverless database on request
-app.use(async (req, res, next) => {
-  try {
-    const userCount = await get(`SELECT COUNT(*) as count FROM users`);
-    if (!userCount || userCount.count === 0) {
-      await seedDatabase();
-    }
-  } catch (err) {
-    await initSchema();
-    await seedDatabase();
-  }
-  next();
-});
 
 // Initialize database schema and auto-seed if clean startup
 const startServer = async () => {
