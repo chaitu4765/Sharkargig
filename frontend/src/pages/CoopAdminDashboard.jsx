@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Users, ShieldCheck, CheckCircle2, XCircle, AlertOctagon, DollarSign, Activity, AlertTriangle } from 'lucide-react';
+import { API_BASE } from '../api';
 
 export const CoopAdminDashboard = () => {
   const { user, token, t } = useAuth();
@@ -12,7 +13,7 @@ export const CoopAdminDashboard = () => {
   const fetchDashboardData = async () => {
     if (!token) return;
     try {
-      const res = await fetch('/api/cooperatives/dashboard', {
+      const res = await fetch(`${API_BASE}/api/cooperatives/dashboard`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -27,7 +28,7 @@ export const CoopAdminDashboard = () => {
   const fetchWorkers = async () => {
     if (!token) return;
     try {
-      const res = await fetch('/api/cooperatives/workers', {
+      const res = await fetch(`${API_BASE}/api/cooperatives/workers`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -48,7 +49,7 @@ export const CoopAdminDashboard = () => {
 
   const handleVerifyWorker = async (workerId, status) => {
     try {
-      const res = await fetch(`/api/cooperatives/workers/${workerId}/verification`, {
+      const res = await fetch(`${API_BASE}/api/cooperatives/workers/${workerId}/verification`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

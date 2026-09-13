@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Globe, Building, TrendingUp, AlertTriangle, Cpu, CheckCircle2, BookOpen, Layers } from 'lucide-react';
+import { API_BASE } from '../api';
 
 export const FederationAdminDashboard = () => {
   const { user, token, t } = useAuth();
@@ -16,25 +17,25 @@ export const FederationAdminDashboard = () => {
     try {
       setLoading(true);
 
-      const socRes = await fetch('/api/cooperatives/federation/societies', {
+      const socRes = await fetch(`${API_BASE}/api/cooperatives/federation/societies`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const socData = await socRes.json();
       if (socData.success) setSocieties(socData.societies);
 
-      const predRes = await fetch('/api/ai/predictions', {
+      const predRes = await fetch(`${API_BASE}/api/ai/predictions`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const predData = await predRes.json();
       if (predData.success) setPredictions(predData);
 
-      const gapRes = await fetch('/api/ai/skill-gaps', {
+      const gapRes = await fetch(`${API_BASE}/api/ai/skill-gaps`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const gapData = await gapRes.json();
       if (gapData.success) setSkillGaps(gapData.skill_gaps);
 
-      const recRes = await fetch('/api/ai/recommendations', {
+      const recRes = await fetch(`${API_BASE}/api/ai/recommendations`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const recData = await recRes.json();
@@ -52,7 +53,7 @@ export const FederationAdminDashboard = () => {
 
   const handleApplyRecommendation = async (recId, action) => {
     try {
-      const res = await fetch(`/api/ai/recommendations/${recId}/action`, {
+      const res = await fetch(`${API_BASE}/api/ai/recommendations/${recId}/action`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

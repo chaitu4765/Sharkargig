@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { Bell, LogOut, Shield } from 'lucide-react';
+import { API_BASE } from '../api';
 
 export const Navbar = () => {
   const { user, token, logout, t } = useAuth();
@@ -10,7 +11,7 @@ export const Navbar = () => {
   const fetchNotifs = async () => {
     if (!token) return;
     try {
-      const res = await fetch('/api/notifications', {
+      const res = await fetch(`${API_BASE}/api/notifications`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();

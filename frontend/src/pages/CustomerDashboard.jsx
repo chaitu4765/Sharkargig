@@ -7,6 +7,7 @@ import { InvoiceModal } from '../components/InvoiceModal';
 import { RatingModal } from '../components/RatingModal';
 import { MapView } from '../components/MapView';
 import { Search, Zap, ShieldCheck, CreditCard, Star, FileText } from 'lucide-react';
+import { API_BASE } from '../api';
 
 export const CustomerDashboard = () => {
   const { user, token, t } = useAuth();
@@ -30,7 +31,7 @@ export const CustomerDashboard = () => {
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch('/api/services/categories');
+      const res = await fetch(`${API_BASE}/api/services/categories`);
       const data = await res.json();
       if (data.success) setCategories(data.categories);
     } catch (err) {
@@ -40,7 +41,7 @@ export const CustomerDashboard = () => {
 
   const fetchServices = async () => {
     try {
-      let url = '/api/services?';
+      let url = `${API_BASE}/api/services?`;
       if (selectedCategory) url += `category_id=${selectedCategory}&`;
       if (searchQuery) url += `search=${encodeURIComponent(searchQuery)}&`;
       if (isEmergency) url += `emergency=true&`;
@@ -62,7 +63,7 @@ export const CustomerDashboard = () => {
     if (!serviceId) return;
     setLoadingWorkers(true);
     try {
-      const res = await fetch(`/api/workers/match?service_id=${serviceId}&is_emergency=${isEmergency}`);
+      const res = await fetch(`${API_BASE}/api/workers/match?service_id=${serviceId}&is_emergency=${isEmergency}`);
       const data = await res.json();
       if (data.success) {
         setMatchedWorkers(data.workers);
@@ -77,7 +78,7 @@ export const CustomerDashboard = () => {
   const fetchMyBookings = async () => {
     if (!token) return;
     try {
-      const res = await fetch('/api/bookings', {
+      const res = await fetch(`${API_BASE}/api/bookings`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -106,7 +107,7 @@ export const CustomerDashboard = () => {
 
   const handleCreateBooking = async (bookingData) => {
     try {
-      const res = await fetch('/api/bookings', {
+      const res = await fetch(`${API_BASE}/api/bookings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -139,7 +140,7 @@ export const CustomerDashboard = () => {
 
   const handleFetchInvoice = async (bookingId) => {
     try {
-      const res = await fetch(`/api/payments/invoice/${bookingId}`, {
+      const res = await fetch(`${API_BASE}/api/payments/invoice/${bookingId}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -155,7 +156,7 @@ export const CustomerDashboard = () => {
 
   const handleSubmitRating = async (ratingData) => {
     try {
-      const res = await fetch('/api/ratings', {
+      const res = await fetch(`${API_BASE}/api/ratings`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

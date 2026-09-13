@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { X, ShieldCheck, QrCode, CreditCard, Landmark, CheckCircle2, Lock, ArrowRight, Smartphone } from 'lucide-react';
+import { ShieldCheck, QrCode, CreditCard, Landmark, CheckCircle2, Lock, Smartphone } from 'lucide-react';
+import { API_BASE } from '../api';
 
 export const PaymentGatewayModal = ({ booking, onClose, onSuccess }) => {
   const { t } = useAuth();
-  const [paymentTab, setPaymentTab] = useState('upi'); // 'upi' | 'card' | 'netbanking' | 'cash'
+  const [paymentTab, setPaymentTab] = useState('upi');
   const [upiId, setUpiId] = useState('customer@okicici');
   const [cardNumber, setCardNumber] = useState('4532 8921 4452 8892');
   const [cardExpiry, setCardExpiry] = useState('08/28');
@@ -20,10 +21,9 @@ export const PaymentGatewayModal = ({ booking, onClose, onSuccess }) => {
     e.preventDefault();
     setIsProcessing(true);
 
-    // Simulate 1.5s gateway handshake
     setTimeout(async () => {
       try {
-        const res = await fetch('/api/payments/process', {
+        const res = await fetch(`${API_BASE}/api/payments/process`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -100,7 +100,6 @@ export const PaymentGatewayModal = ({ booking, onClose, onSuccess }) => {
             </div>
           </div>
         ) : isProcessing ? (
-          /* Processing View */
           <div style={{ padding: '3.5rem 1.5rem', textAlign: 'center' }}>
             <div
               style={{
@@ -120,7 +119,6 @@ export const PaymentGatewayModal = ({ booking, onClose, onSuccess }) => {
             <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
           </div>
         ) : (
-          /* Payment Method Selector View */
           <div style={{ padding: '1.25rem 1.5rem' }}>
             <form onSubmit={handleProcessPayment}>
               {/* Tabs */}
@@ -196,7 +194,6 @@ export const PaymentGatewayModal = ({ booking, onClose, onSuccess }) => {
               {paymentTab === 'upi' && (
                 <div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', alignItems: 'center', marginBottom: '1rem' }}>
-                    {/* Simulated QR Code */}
                     <div style={{ background: '#fff', border: '2px solid #e2e8f0', borderRadius: '10px', padding: '0.75rem', textAlign: 'center' }}>
                       <div style={{ background: '#0f172a', color: '#fff', padding: '0.2rem', borderRadius: '4px', fontSize: '0.65rem', fontWeight: 700, marginBottom: '0.5rem' }}>
                         SCAN QR CODE TO PAY
@@ -209,7 +206,6 @@ export const PaymentGatewayModal = ({ booking, onClose, onSuccess }) => {
                       </div>
                     </div>
 
-                    {/* VPA Input */}
                     <div>
                       <label style={{ fontSize: '0.8rem', fontWeight: 600, color: '#334155', display: 'block', marginBottom: '0.3rem' }}>
                         Enter UPI ID / VPA

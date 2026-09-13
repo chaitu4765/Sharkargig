@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { translations } from '../i18n';
+import { API_BASE } from '../api';
 
 const AuthContext = createContext();
 
@@ -14,17 +15,14 @@ export const AuthProvider = ({ children }) => {
     if (!key) return '';
     const langDict = translations[lang] || translations['en'];
 
-    // 1. Direct key match
     if (langDict[key]) return langDict[key];
 
-    // 2. Normalized slug match
     const normKey = String(key).toLowerCase().trim().replace(/[^a-z0-9]+/g, '_');
     if (langDict[normKey]) return langDict[normKey];
     if (langDict[`status_${normKey}`]) return langDict[`status_${normKey}`];
     if (langDict[`cat_${normKey}`]) return langDict[`cat_${normKey}`];
     if (langDict[`srv_${normKey}`]) return langDict[`srv_${normKey}`];
 
-    // 3. Known dynamic string lookup maps for DB entities
     const dynamicMap = {
       'Plumbing & Sanitation': 'cat_plumb',
       'Electrical & Power': 'cat_elec',
@@ -75,7 +73,7 @@ export const AuthProvider = ({ children }) => {
   const fetchSession = async (authToken) => {
     try {
       setLoading(true);
-      const res = await fetch('/api/auth/me', {
+      const res = await fetch(`${API_BASE}/api/auth/me`, {
         headers: { Authorization: `Bearer ${authToken}` }
       });
       const data = await res.json();
@@ -129,7 +127,7 @@ export const AuthProvider = ({ children }) => {
 
     try {
       setLoading(true);
-      const res = await fetch('/api/auth/login', {
+      const res = await fetch(`${API_BASE}/api/auth/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(creds)

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { ShieldCheck, CheckCircle, DollarSign, Award, HeartPulse, BookOpen, ToggleLeft, ToggleRight, AlertTriangle } from 'lucide-react';
+import { API_BASE } from '../api';
 
 export const WorkerDashboard = () => {
   const { user, token, t } = useAuth();
@@ -13,7 +14,7 @@ export const WorkerDashboard = () => {
   const fetchProfile = async () => {
     if (!token) return;
     try {
-      const res = await fetch('/api/workers/me/profile', {
+      const res = await fetch(`${API_BASE}/api/workers/me/profile`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -29,7 +30,7 @@ export const WorkerDashboard = () => {
   const fetchJobs = async () => {
     if (!token) return;
     try {
-      const res = await fetch('/api/bookings', {
+      const res = await fetch(`${API_BASE}/api/bookings`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -44,7 +45,7 @@ export const WorkerDashboard = () => {
   const fetchEarnings = async () => {
     if (!token) return;
     try {
-      const res = await fetch('/api/workers/earnings', {
+      const res = await fetch(`${API_BASE}/api/workers/earnings`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       const data = await res.json();
@@ -67,7 +68,7 @@ export const WorkerDashboard = () => {
   const handleToggleAvailability = async () => {
     try {
       const nextState = !isAvailable;
-      const res = await fetch('/api/workers/availability', {
+      const res = await fetch(`${API_BASE}/api/workers/availability`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -87,7 +88,7 @@ export const WorkerDashboard = () => {
 
   const handleStatusUpdate = async (bookingId, newStatus) => {
     try {
-      const res = await fetch(`/api/bookings/${bookingId}/status`, {
+      const res = await fetch(`${API_BASE}/api/bookings/${bookingId}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -113,7 +114,7 @@ export const WorkerDashboard = () => {
       return;
     }
     try {
-      const res = await fetch('/api/workers/sos', {
+      const res = await fetch(`${API_BASE}/api/workers/sos`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
