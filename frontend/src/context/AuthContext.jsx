@@ -79,27 +79,37 @@ export const AuthProvider = ({ children }) => {
       const data = await res.json();
       if (data.success) {
         setUser(data.user);
+        if (data.user?.role) {
+          localStorage.setItem('sahakar_role', data.user.role);
+        }
       } else {
-        logout();
+        const savedRole = localStorage.getItem('sahakar_role') || 'customer';
+        switchDemoRole(savedRole);
       }
     } catch (error) {
       console.error('Session fetch error:', error);
+      const savedRole = localStorage.getItem('sahakar_role') || 'customer';
+      switchDemoRole(savedRole);
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
+    const savedRole = localStorage.getItem('sahakar_role') || 'customer';
     if (token) {
       fetchSession(token);
     } else {
-      switchDemoRole('customer');
+      switchDemoRole(savedRole);
     }
   }, [token]);
 
   const login = (userData, authToken) => {
     setUser(userData);
     setToken(authToken);
+    if (userData?.role) {
+      localStorage.setItem('sahakar_role', userData.role);
+    }
     localStorage.setItem('sahakar_token', authToken);
   };
 
@@ -107,6 +117,7 @@ export const AuthProvider = ({ children }) => {
     setUser(null);
     setToken('');
     localStorage.removeItem('sahakar_token');
+    localStorage.removeItem('sahakar_role');
   };
 
   const changeLanguage = (newLang) => {
@@ -131,6 +142,7 @@ export const AuthProvider = ({ children }) => {
 
     const creds = demoCredentials[roleName];
     if (!creds) return;
+    localStorage.setItem('sahakar_role', roleName);
 
     try {
       setLoading(true);
@@ -143,13 +155,59 @@ export const AuthProvider = ({ children }) => {
       if (data.success) {
         login(data.user, data.token);
       } else {
-        setUser(fallbackUsers[roleName]);
+        const fb = fallbackUsers[roleName];
+        setUser(fb);
       }
     } catch (err) {
       console.warn('Demo API login offline/CORS fallback engaged:', err);
-      setUser(fallbackUsers[roleName]);
+      const fb = fallbackUsers[roleName];
+      setUser(fb);
     } finally {
       setLoading(false);
+    }
+  };
+
+  // Local storage helpers for persistent offline/offline-fallback booking synchronization
+  const getStoredBookings = () => {
+    try {
+      const raw = localStorage.getItem('sahakar_local_bookings');
+      return raw ? JSON.parse(raw) : [];
+    } catch (e) {
+      return [];
+    }
+  };
+
+  const saveStoredBooking = (newBooking) => {
+    try {
+      const existing = getStoredBookings();
+      const idx = existing.findIndex(b => b.id === newBooking.id || b.booking_number === newBooking.booking_number);
+      let updated;
+      if (idx >= 0) {
+        updated = [...existing];
+        updated[idx] = { ...updated[idx], ...newBooking };
+      } else {
+        updated = [newBooking, ...existing];
+      }
+      localStorage.setItem('sahakar_local_bookings', JSON.stringify(updated));
+      window.dispatchEvent(new Event('sahakar_booking_updated'));
+    } catch (e) {
+      console.error('Error saving local booking:', e);
+    }
+  };
+
+  const updateStoredBookingStatus = (bookingId, status, extraFields = {}) => {
+    try {
+      const existing = getStoredBookings();
+      const updated = existing.map(b => {
+        if (String(b.id) === String(bookingId) || b.booking_number === bookingId) {
+          return { ...b, status, ...extraFields, updated_at: new Date().toISOString() };
+        }
+        return b;
+      });
+      localStorage.setItem('sahakar_local_bookings', JSON.stringify(updated));
+      window.dispatchEvent(new Event('sahakar_booking_updated'));
+    } catch (e) {
+      console.error('Error updating local booking status:', e);
     }
   };
 
@@ -164,7 +222,10 @@ export const AuthProvider = ({ children }) => {
         login,
         logout,
         changeLanguage,
-        switchDemoRole
+        switchDemoRole,
+        getStoredBookings,
+        saveStoredBooking,
+        updateStoredBookingStatus
       }}
     >
       {children}

@@ -238,10 +238,10 @@ router.get('/', authenticateToken, async (req, res) => {
         params.push(customer.id);
       }
     } else if (req.user.role === 'worker') {
-      const worker = await get(`SELECT id FROM workers WHERE user_id = ?`, [req.user.id]);
+      const worker = await get(`SELECT id, society_id FROM workers WHERE user_id = ?`, [req.user.id]);
       if (worker) {
-        sql += ` AND b.worker_id = ?`;
-        params.push(worker.id);
+        sql += ` AND (b.worker_id = ? OR (b.worker_id IS NULL AND b.society_id = ?))`;
+        params.push(worker.id, worker.society_id);
       }
     } else if (req.user.role === 'coop_admin') {
       const coop = await get(`SELECT id FROM cooperative_societies WHERE contact_email = ?`, [req.user.email]);
